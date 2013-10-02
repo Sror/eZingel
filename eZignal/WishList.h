@@ -10,7 +10,19 @@
 #import "favModel.h"
 #import "DbAccessor.h"
 #import "ReaderViewController.h"
-@interface WishList : UIViewController<UIWebViewDelegate,ReaderViewControllerDelegate>
+#import "PSCStoreManager.h"
+#import "PSCFileHelper.h"
+#import "PSCGridViewController.h"
+#import "PSCGoToPageButtonItem.h"
+#import "PSCKioskPDFViewController.h"
+#import "PSCImageGridViewCell.h"
+#import "PSCMagazine.h"
+#import "PSCMagazineFolder.h"
+#import "PSCKioskPDFViewController.h"
+#import "PSCSettingsController.h"
+#import "PSCShadowView.h"
+#import "SDURLCache.h"
+@interface WishList : UIViewController<UIWebViewDelegate,ReaderViewControllerDelegate,PSCStoreManagerDelegate>
 {
     BOOL chngeFlag;
     int language,booksCount,reminder, downCount, lastOffset;

@@ -380,7 +380,7 @@
     //   document = [ReaderDocument withDocumentFilePath:[filePathWord objectAtIndex:([sender tag]/200)-1] password:phrase];
     //else
     int i = 0;
-    for(favModel *obj in pdfList)
+   /* for(favModel *obj in pdfList)
     {
         if(i == (([sender tag]/200)-1))
         {
@@ -388,8 +388,37 @@
             break;
         }
         i++;
-    }
+    }*/
     
+    for(favModel *obj in pdfList)
+    {
+        if(i == (([sender tag]/200)-1))
+        {
+            NSURL *samplesURL = [NSURL fileURLWithPath:[obj pdfPath] isDirectory:YES];
+            
+            PSPDFViewController *controller = [[PSPDFViewController alloc] initWithDocument:[PSPDFDocument documentWithURL:samplesURL]];
+            // Starting with iOS7, we usually don't want to include an internal brightness control.
+            // Since PSPDFKit optionally uses an additional software darkener, it can still be useful for certain places like a Pilot's Cockpit.
+            BOOL includeBrightnessButton = YES;
+            PSC_IF_IOS7_OR_GREATER(includeBrightnessButton = NO;)
+            controller.rightBarButtonItems = includeBrightnessButton ? @[controller.annotationButtonItem, controller.brightnessButtonItem,controller.bookmarkButtonItem, controller.searchButtonItem, controller.viewModeButtonItem] : @[controller.annotationButtonItem, controller.searchButtonItem, controller.viewModeButtonItem];
+            PSCGoToPageButtonItem *goToPageButton = [[PSCGoToPageButtonItem alloc] initWithPDFViewController:controller];
+
+            controller.pageTransition = PSPDFPageTransitionScrollContinuous;
+            controller.scrollDirection = PSPDFScrollDirectionHorizontal;
+            controller.fitToWidthEnabled = YES;
+            controller.pagePadding = 5.f;
+            controller.renderAnimationEnabled = NO;
+            controller.statusBarStyleSetting = PSPDFStatusBarStyleDefault;
+            [self.navigationController setNavigationBarHidden:NO];
+            [self.navigationController pushViewController:controller animated:YES];
+            break;
+        }
+        i++;
+    }
+   
+    
+    /*
 	if (document != nil) // Must have a valid ReaderDocument object in order to proceed with things
 	{
         
@@ -410,7 +439,7 @@
 		[self presentModalViewController:readerViewController animated:YES];
         
 #endif // DEMO_VIEW_CONTROLLER_PUSH
-	}
+	}*/
     
 }
 

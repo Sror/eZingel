@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Login.h"
+#import "SetLanguage.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) Login *login;
+@property (strong, nonatomic) SetLanguage *sl;
 @property (nonatomic,strong) UINavigationController *nav;
 
 @property (nonatomic) int currentBack;

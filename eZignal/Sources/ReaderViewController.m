@@ -31,8 +31,8 @@
 #import "ReaderContentView.h"
 #import "ReaderThumbCache.h"
 #import "ReaderThumbQueue.h"
-
 #import <MessageUI/MessageUI.h>
+
 
 @interface ReaderViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate,
 									ReaderMainToolbarDelegate, ReaderMainPagebarDelegate, ReaderContentViewDelegate, ThumbsViewControllerDelegate>
@@ -749,6 +749,22 @@
 	}
 
 #endif // end of READER_STANDALONE Option
+}
+
+
+
+- (void)tappedInToolbar:(ReaderMainToolbar *)toolbar searchButton:(UIButton *)button
+{
+  //  PDFSearcher *ObjPDFSearcher=[[PDFSearcher alloc]init];
+    //BOOL *isAvaiable=[ObjPDFSearcher page:drawPDFPageRef containsString:@"a"];
+    
+    //[pageView setKeyword:@"is"];
+  
+
+    // CGPDFPageRef page = CGPDFDocumentGetPage((__bridge CGPDFDocumentRef)(document.fileURL), 1);
+    //Scanner *scanner = [Scanner scannerWithPage:page];
+    
+   // [[[UIAlertView alloc] initWithTitle:@"tmam" message:@"eshta" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil] show];
 }
 
 - (void)tappedInToolbar:(ReaderMainToolbar *)toolbar thumbsButton:(UIButton *)button

@@ -9,7 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "ReaderViewController.h"
 #import "DbAccessor.h"
-@interface Library : UIViewController <UIWebViewDelegate,ReaderViewControllerDelegate>
+#import "PSCStoreManager.h"
+#import "PSCFileHelper.h"
+#import "PSCGridViewController.h"
+#import "PSCGoToPageButtonItem.h"
+#import "PSCKioskPDFViewController.h"
+@class PSCMagazineFolder;
+
+@interface Library : UIViewController <UIWebViewDelegate,ReaderViewControllerDelegate,PSCStoreManagerDelegate >
 {
     BOOL chngeFlag;
     int language, downCount, lastOffset ,booksCount, reminder;
@@ -17,8 +24,11 @@
     NSArray *filePathPdf,*filePathWord;
     NSMutableArray *pdfList;
     DbAccessor *db;
+    NSArray *_filteredData;
+    NSUInteger _animationCellIndex;
+    BOOL _animationDoubleWithPageCurl;
+    BOOL _animateViewWillAppearWithFade;
 }
-
 @property (weak, nonatomic) IBOutlet UIScrollView *woodLibScroll;
 
 @property (weak, nonatomic) IBOutlet UIButton *editBtn;

@@ -24,7 +24,10 @@
     }
     return self;
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
+}
 -(void) willAnimateRotationToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation duration: (NSTimeInterval) duration {
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)

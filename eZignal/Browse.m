@@ -28,12 +28,15 @@
     }
     return self;
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
+}
 -(void)loadWeb
 {
     [SVProgressHUD show];
-    NSURL *targetURL = [NSURL URLWithString:@"http://www.memoware.com"];
-    // NSURL *targetURL = [NSURL URLWithString:@"https://www.ezingel.com/7-e-books"];
+   // NSURL *targetURL = [NSURL URLWithString:@"http://www.memoware.com"];
+    NSURL *targetURL = [NSURL URLWithString:@"https://www.ezingel.com/7-e-books"];
     NSURLRequest *request = [NSURLRequest requestWithURL:targetURL];
     storeWebView.delegate = self;
     [storeWebView setScalesPageToFit:YES];

@@ -15,6 +15,14 @@
 #import "pdfModel.h"
 #import "favModel.h"
 #import "AppDelegate.h"
+#import "PSCKioskPDFViewController.h"
+#import "PSCImageGridViewCell.h"
+#import "PSCMagazine.h"
+#import "PSCMagazineFolder.h"
+#import "PSCKioskPDFViewController.h"
+#import "PSCSettingsController.h"
+#import "PSCShadowView.h"
+#import "SDURLCache.h"
 
 @interface Library ()
 
@@ -370,7 +378,26 @@ static NSString * const kCellReuseIdentifier = @"collectionViewCell";
         i++;
     }*/
     
-	if (document != nil) // Must have a valid ReaderDocument object in order to proceed with things
+    NSURL *samplesURL = [NSURL fileURLWithPath:FilePath isDirectory:YES];
+    
+    PSPDFViewController *controller = [[PSPDFViewController alloc] initWithDocument:[PSPDFDocument documentWithURL:samplesURL]];
+    // Starting with iOS7, we usually don't want to include an internal brightness control.
+    // Since PSPDFKit optionally uses an additional software darkener, it can still be useful for certain places like a Pilot's Cockpit.
+    BOOL includeBrightnessButton = YES;
+    PSC_IF_IOS7_OR_GREATER(includeBrightnessButton = NO;)
+    controller.rightBarButtonItems = includeBrightnessButton ? @[controller.annotationButtonItem, controller.brightnessButtonItem,controller.bookmarkButtonItem, controller.searchButtonItem, controller.viewModeButtonItem] : @[controller.annotationButtonItem, controller.searchButtonItem, controller.viewModeButtonItem];
+    PSCGoToPageButtonItem *goToPageButton = [[PSCGoToPageButtonItem alloc] initWithPDFViewController:controller];
+    controller.pageTransition = PSPDFPageTransitionScrollContinuous;
+    controller.scrollDirection = PSPDFScrollDirectionHorizontal;
+    controller.fitToWidthEnabled = YES;
+    controller.pagePadding = 5.f;
+    controller.renderAnimationEnabled = NO;
+    controller.statusBarStyleSetting = PSPDFStatusBarStyleDefault;
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController pushViewController:controller animated:YES];
+    
+   // PSCKioskPDFViewController *pdfController = [[PSCKioskPDFViewController alloc] initWithDocument:document];
+	/*if (document != nil) // Must have a valid ReaderDocument object in order to proceed with things
 	{
         
         
@@ -391,7 +418,15 @@ static NSString * const kCellReuseIdentifier = @"collectionViewCell";
         
 #endif // DEMO_VIEW_CONTROLLER_PUSH
 	}
+*/
+}
 
+- (UIImage *)imageForMagazine:(PSCMagazine *)magazine {
+    if (!magazine) return nil;
+    
+    NSUInteger lastPage = magazine.lastViewState.page;
+    UIImage *coverImage = [PSPDFCache.sharedCache imageFromDocument:magazine page:lastPage size:UIScreen.mainScreen.bounds.size options:PSPDFCacheOptionDiskLoadSync|PSPDFCacheOptionRenderSync|PSPDFCacheOptionMemoryStoreAlways];
+    return coverImage;
 }
 
 - (void)dismissReaderViewController:(ReaderViewController *)viewController

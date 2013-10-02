@@ -45,6 +45,7 @@
 #define BUTTON_HEIGHT 30.0f
 
 #define DONE_BUTTON_WIDTH 56.0f
+#define SEARCH_BUTTON_WIDTH 66.0f
 #define THUMBS_BUTTON_WIDTH 40.0f
 #define PRINT_BUTTON_WIDTH 40.0f
 #define EMAIL_BUTTON_WIDTH 40.0f
@@ -145,6 +146,24 @@
 		markImageY = [UIImage imageNamed:@"Reader-Mark-Y"]; // Y image
 
 #endif // end of READER_BOOKMARKS Option
+        
+        UIButton *searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+		searchButton.frame = CGRectMake(leftButtonX +60, BUTTON_Y, SEARCH_BUTTON_WIDTH, BUTTON_HEIGHT);
+		[searchButton setTitle:NSLocalizedString(@"Search", @"button") forState:UIControlStateNormal];
+		[searchButton setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateNormal];
+		[searchButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:1.0f] forState:UIControlStateHighlighted];
+		[searchButton addTarget:self action:@selector(searchButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+		[searchButton setBackgroundImage:buttonH forState:UIControlStateHighlighted];
+		[searchButton setBackgroundImage:buttonN forState:UIControlStateNormal];
+		searchButton.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+		searchButton.autoresizingMask = UIViewAutoresizingNone;
+        
+		[self addSubview:searchButton]; leftButtonX += (SEARCH_BUTTON_WIDTH + BUTTON_SPACE);
+        
+		titleX += (SEARCH_BUTTON_WIDTH + BUTTON_SPACE); titleWidth -= (SEARCH_BUTTON_WIDTH + BUTTON_SPACE);
+
+        
 
 #if (READER_ENABLE_MAIL == TRUE) // Option
 
@@ -297,6 +316,11 @@
 }
 
 #pragma mark UIButton action methods
+
+- (void)searchButtonTapped:(UIButton *)button
+{
+	[delegate tappedInToolbar:self searchButton:button];
+}
 
 - (void)doneButtonTapped:(UIButton *)button
 {
