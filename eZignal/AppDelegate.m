@@ -7,14 +7,36 @@
 //
 
 #import "AppDelegate.h"
-
 @implementation AppDelegate
-
+@synthesize currentBack = _currentBack;
+@synthesize tabIndex = _tabIndex;
+@synthesize fileType = _fileType;
+@synthesize currentTab = _currentTab;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
+        if (UIInterfaceOrientationIsPortrait(interfaceOrientation))
+            self.login = [[Login alloc] initWithNibName:@"Login" bundle:nil];
+        else
+            self.login = [[Login alloc] initWithNibName:@"Login_Land" bundle:nil]; 
+    }
+    else
+    {
+        if (UIInterfaceOrientationIsPortrait(interfaceOrientation))
+            self.login = [[Login alloc] initWithNibName:@"Login_ipad" bundle:nil];
+        else
+            self.login = [[Login alloc] initWithNibName:@"Login_Land_ipad" bundle:nil];
+    }
+    
+    
+    
+    self.nav=[[UINavigationController alloc]initWithRootViewController:self.login];
+    [self.nav setNavigationBarHidden:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = self.nav;
     [self.window makeKeyAndVisible];
     return YES;
 }
